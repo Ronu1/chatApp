@@ -1,0 +1,11 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+#root {
+    max-width: 1280px;
+    margin: 0 auto;
+    text-align: center;
+    height: 100vh;
+    background-color: rgb(221, 239, 255) !important;
+}
