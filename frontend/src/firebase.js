@@ -5,13 +5,13 @@ import { getStorage } from "firebase/storage";
 import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBhTtlmQo_4Hu7BbRxmRwqksmN5Fkh6fWc",
-  authDomain: "brill-chat.firebaseapp.com",
-  projectId: "brill-chat",
-  storageBucket: "brill-chat.appspot.com",
-  messagingSenderId: "1064733878795",
-  appId: "1:1064733878795:web:d27baf1f70a0c995cd750e",
-  measurementId: "G-DL4465MZNS",
+  apiKey: "AIzaSyCTBDN95n64VYab_RHwBKAUjViDSOTWFbU",
+  authDomain: "chatapp-fb800.firebaseapp.com",
+  projectId: "chatapp-fb800",
+  storageBucket: "chatapp-fb800.appspot.com",
+  messagingSenderId: "52195894523",
+  appId: "1:52195894523:web:227ab9272283863324fc5e",
+  measurementId: "G-JK9B8RXVZJ"
 };
 
 // Initialize Firebase

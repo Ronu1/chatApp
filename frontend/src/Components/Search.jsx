@@ -33,13 +33,13 @@ const Search = () => {
         <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
           <i
             className="fa-solid fa-magnifying-glass fa-2xs pl-2"
-            style={{ color: "#fff" }}
+            style={{ color: "#000" }}
           ></i>
         </div>
         <input
           type="search"
           id="default-search"
-          className="block w-full p-3 pl-10 text-sm text-black border border-opacity-60 border-white rounded-lg bg-slate-300 hover:border-white hover:transition-all hover:duration-600 focus:transition-all focus:duration-500 focus:border-sky-400 focus:outline-none"
+          className="block w-full p-3 pl-10 text-sm text-black border border-opacity-60 border-white rounded-lg bg-[#d0d0ff] hover:border-white hover:transition-all hover:duration-600 focus:transition-all focus:duration-500 focus:border-sky-400 focus:outline-none"
           placeholder="Search for..."
           onKeyDown={handleKey}
           onChange={(e) => setUsername(e.target.value)}

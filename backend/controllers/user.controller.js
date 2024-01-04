@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const USER = mongoose.model("User");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const { Jwt_secret } = require("../utils/keys");
+const { Jwt_secret } = require("../env");
 const asyncHandler = require("express-async-handler");
 
 exports.allUsers = asyncHandler(async (req, res) => {
@@ -43,10 +43,10 @@ exports.signup = async (req, res) => {
         password: hashedPassword,
         pic: profilePic,
       });
-      const token = jwt.sign({ _id: savedUser.id }, Jwt_secret);
       user
-        .save()
-        .then(() => {
+      .save()
+      .then(() => {
+          const token = jwt.sign({ _id: user._id }, Jwt_secret);
           res.json({ savedUser: user, token: token, message: "saved Successfully" });
         })
         .catch((err) => {

@@ -21,7 +21,7 @@ const Messages = () => {
 
 
   return (
-    <div className="bg-[#ddddf7] h-[calc(100%_-_100px)] overflow-y-scroll scroll-smooth p-2.5 ">
+    <div className="bg-[#ddddf7] h-[calc(100%_-_110px)] overflow-y-scroll scroll-smooth p-2.5 scrollbar-style  ">
       {messages.map((message, index) => (
         <Message message={message} del={index} key={message.id} />
       ))}

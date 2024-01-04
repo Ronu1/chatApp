@@ -9,7 +9,8 @@ export const ChatContextProvider = ({ children }) => {
     isGroupChat: false,
     pic: "",
     chatId: "null",
-    groupPic : ""
+    groupPic : "",
+    groupAdmin: ""
   };
 
   const chatReducer = (state, action) => {
@@ -21,8 +22,9 @@ export const ChatContextProvider = ({ children }) => {
           pic: action.payload.users[0].pic,
           isGroupChat: action.payload.isGroupChat,
           chatName: action.payload.chatName,
-          groupPic : action.payload.groupPic,
-        };
+          groupPic: action.payload.groupPic,
+          groupAdmin: action.payload.groupAdmin?._id,
+        }
 
       default:
         return state;

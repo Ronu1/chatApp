@@ -88,7 +88,7 @@ const Input = () => {
   };
 
   return (
-    <div className="h-[50px] bg-[white] flex items-center justify-between p-2.5">
+    <div className="h-[50px] bg-[#ddddf7] flex items-center justify-between pl-0 p-2.5">
       {data && (
         <>
           <InputEmoji
@@ -96,7 +96,7 @@ const Input = () => {
             onChange={setSelectedEmoji}
             cleanOnEnter
             onKeyDown={handleKeyPress}
-            className="w-[100%] px-2 py-1 font-medium outline-none text-[#031526] rounded-s-lg "
+            className="w-[100%]  px-2 py-1 font-medium outline-none text-[#031526] rounded-s-lg "
             placeholder="Enter your text here!"
           />
           <div className="flex items-center gap-[10px]">
@@ -122,7 +122,7 @@ const Input = () => {
               </div>
             ) : (
               <button
-                className="border-none py-[10px] px-[15px] text-white rounded-xl bg-[#6f91ff] cursor-pointer"
+                className="border-none py-[10px] px-[15px] text-white rounded-xl bg-[#8c8cff] cursor-pointer"
                 onClick={handleSend}
               >
                 Send

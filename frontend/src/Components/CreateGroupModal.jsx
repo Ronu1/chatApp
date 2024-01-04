@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
+import useOutsideClick from "../CustomHooks/useOutsideClick";
 
 const CreateGroupModal = ({
   handleUserSelect,
@@ -11,7 +12,9 @@ const CreateGroupModal = ({
   userSearch,
   setUserSearch,
   removeUserSelect,
+  addMemberModal,
 }) => {
+   
   const addUserInChat = useSelector((state) => state.user.addUserInChat);
   const [user, setUser] = useState([]);
 
@@ -22,20 +25,22 @@ const CreateGroupModal = ({
   };
 
   const removeSelect = (tag) => {
-    setUser(user.filter((sel) => sel.uid !== tag.uid));
+    setUser(user.filter((sel) => sel._id !== tag._id));
   };
 
   return (
     <>
-      <div className="fixed inset-0 bg-gray-300 bg-opacity-50 flex items-center justify-center z-[1000]">
-        <div className=" bg-white p-8 rounded-lg w-96">
+      <div className="fixed inset-0 bg-gray-300 bg-opacity-50 flex items-center justify-center z-[1000]" >
+        <div className="relative bg-white p-8 rounded-lg w-96" >
           <span
-            className=" absolute top-2 right-2 text-2xl cursor-pointer"
+            className="absolute top-2 right-2 text-2xl cursor-pointer"
             onClick={closeModal}
           >
             &times;
           </span>
-          <h2 className="text-2xl font-bold mb-4">Create Group</h2>
+          <h2 className="text-2xl font-bold mb-4">
+            {addMemberModal === true ? "Add Member" : "Create Group"}
+          </h2>
           <div className="mb-4">
             <label
               htmlFor="groupName"
@@ -49,7 +54,11 @@ const CreateGroupModal = ({
               name="groupName"
               className="mt-1 p-2 w-full border rounded-md"
               value={groupName}
-              onChange={(e) => setGroupName(e.target.value)}
+              onChange={(e) => {
+                if (addMemberModal !== true) {
+                  setGroupName(e.target.value);
+                }
+              }}
             />
           </div>
           <div className="mb-4">
@@ -75,7 +84,7 @@ const CreateGroupModal = ({
             {user.length > 0
               ? user.map((tag) => {
                   return (
-                    <div key={tag.uid} className="border">
+                    <div key={tag._id} className="border">
                       <button className=" text-black p-[1px]  text-xs ">
                         {tag.name}
 
@@ -98,7 +107,7 @@ const CreateGroupModal = ({
               <div key={user._id}>
                 <span className="capitalize">{user.name}</span>
                 <button
-                className="p-1"
+                  className="p-1"
                   onClick={() => {
                     handleUserSelect(user);
                     handleSelect(user);
@@ -115,11 +124,11 @@ const CreateGroupModal = ({
           <button
             className="bg-blue-500 hover:bg-blue-700 text-white font-bold mt-1 py-2 px-4 rounded"
             onClick={() => {
-              handleCreateGroup()
+              handleCreateGroup();
               setUser([]);
             }}
           >
-            Create Group
+            {addMemberModal === true ? "Add Member" : "Create Group"}
           </button>
         </div>
       </div>

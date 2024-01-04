@@ -65,6 +65,7 @@ const fetchChats = asyncHandler(async (req, res) => {
         results = await User.populate(data, {
           path: "latestMessage.sender",
           select: "name pic email",
+          // match: { _id: { $ne: req.user._id } },
         });
         res.status(200).send(results);
       });
@@ -136,7 +137,7 @@ const renameGroup = asyncHandler(async (req, res) => {
     .populate("groupAdmin", "-password");
 
   if (!updatedChat) {
-    res.status(404);
+    res.status(404).json({error: "Same ChatName was given"})
     throw new Error("Chat Not Found");
   } else {
     res.json(updatedChat);
@@ -147,18 +148,29 @@ const renameGroup = asyncHandler(async (req, res) => {
 const removeFromGroup = asyncHandler(async (req, res) => {
   const { chatId, userId } = req.body;
 
-  // check if the requester is admin
+  const isAdmin = await Chat.findById(chatId)
+
+  if (!req.user._id.equals(isAdmin.groupAdmin._id)) {
+    res.status(403).json({ error: "Permission denied" });
+    throw new Error("Permission Denied: Only admins can remove users.");
+  }
+
+let userIdArray = Array.isArray(userId) ? userId : [userId];
 
   const removed = await Chat.findByIdAndUpdate(
     chatId,
     {
-      $pull: { users: userId },
+      $pullAll: { users: userIdArray },
     },
     {
       new: true,
     }
   )
-    .populate("users", "-password")
+    .populate({
+      path: "users",
+      select: "-password",
+      match: { _id: { $ne: req.user._id } },
+    })
     .populate("groupAdmin", "-password");
 
   if (!removed) {
@@ -172,18 +184,29 @@ const removeFromGroup = asyncHandler(async (req, res) => {
 const addToGroup = asyncHandler(async (req, res) => {
   const { chatId, userId } = req.body;
 
-  // check if the requester is admin
+ const isAdmin = await Chat.findById(chatId);
+
+ if (!req.user._id.equals(isAdmin.groupAdmin._id)) {
+   res.status(403).json({ error: "Permission denied" });
+   throw new Error("Permission Denied: Only admins can remove users.");
+ }
+
+ let userIdArray = Array.isArray(userId) ? userId : [userId];
 
   const added = await Chat.findByIdAndUpdate(
     chatId,
     {
-      $push: { users: userId },
+      $addToSet: { users: { $each: userIdArray } },
     },
     {
       new: true,
     }
   )
-    .populate("users", "-password")
+    .populate({
+      path: "users",
+      select: "-password",
+      match: { _id: { $ne: req.user._id } },
+    })
     .populate("groupAdmin", "-password");
 
   if (!added) {

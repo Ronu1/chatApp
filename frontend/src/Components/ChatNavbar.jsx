@@ -1,18 +1,10 @@
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../Context/AuthContext";
-import { auth, db } from "../firebase";
 import { useNavigate } from "react-router-dom";
 import EllipsisWithLogout from "./EllipsisWithLogout";
 import CreateGroupModal from "./CreateGroupModal";
 import { useDispatch } from "react-redux";
 import { getUser, removeSearchedUser } from "../redux/features/UserSlice";
-import {
-  setDoc,
-  doc,
-  updateDoc,
-  serverTimestamp,
-  getDoc,
-} from "firebase/firestore";
 import { v4 as uuidv4 } from "uuid";
 import { createGroupChat } from "../redux/features/ChatSlice";
 
@@ -88,7 +80,7 @@ const ChatNavbar = () => {
   };
 
   return (
-    <div className="flex justify-between items-center h-[60px] w-full bg-[#eee] z-[1000] m-0 pl-[15px] pr-4 py-2.5">
+    <div className="flex justify-between items-center h-[60px] w-full bg-[#adadff] z-[1000] m-0 pl-[15px] pr-4 py-2.5">
       <div className="w-max  flex items-center gap-2 cursor-pointer">
         <input
           style={{ display: "none" }}

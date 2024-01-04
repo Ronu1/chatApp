@@ -15,11 +15,10 @@ const Chats = () => {
   const { dispatch } = useContext(ChatContext);
   const reduxDispatch = useDispatch();
   const chatData = useSelector((state) => state.chat.chatData);
-  const messageData = useSelector((state) => state.message.messageData);
 
   useEffect(() => {
-    currentUser.uid && reduxDispatch(fetchChats());
-  }, [messageData]);
+    currentUser.id && reduxDispatch(fetchChats());
+  }, [currentUser.id]);
 
   const handleSelect = async (u) => {
     const res = await getDoc(doc(db, "chats", u.id));
@@ -37,7 +36,7 @@ const Chats = () => {
             return (
               <div
                 key={data._id}
-                className={`flex items-center p-3 py-[6px] justify-between border-b hover:bg-slate-100 `}
+                className={`flex  items-center p-3 py-[6px] justify-between border-b border-[#a4a4ff] hover:bg-[#b9b9ff] `}
                 onClick={() => handleSelect(data)}
               >
                 <div className="w-3/4 flex items-center p-1">
@@ -49,26 +48,29 @@ const Chats = () => {
                   </div>
 
                   <div className="flex flex-col ">
-                    <span className="capitalize font-semibold text-[16px]">
-                      {data.isGroupChat? data.chatName :data.users[0].name}
+                    <span className="capitalize font-semibold text-[16px] text-start">
+                      {data.isGroupChat ? data.chatName : data.users[0].name}
                     </span>
-                    <p className="text-[14px]">
+                    <p className="text-[14px] text-start">
                       {data.latestMessage?.content
-                        ? data.isGroupChat? `${data.latestMessage.sender.name} : ${data.latestMessage.content}` : data.latestMessage.content
+                        ? data.isGroupChat
+                          ? `${data.latestMessage.sender.name} : ${data.latestMessage.content}`
+                          : data.latestMessage.content
                         : ""}
                     </p>
                   </div>
                 </div>
                 <div className="text-xs p-1 flex gap-2">
                   <span className="time-meta pull-right">
-                    {new Date(data.latestMessage?.updatedAt ? data.latestMessage.updatedAt : data.updatedAt).toLocaleTimeString(
-                      [],
-                      {
-                        hour: "2-digit",
-                        minute: "2-digit",
-                        timeZone: "IST",
-                      }
-                    )}
+                    {new Date(
+                      data.latestMessage?.updatedAt
+                        ? data.latestMessage.updatedAt
+                        : data.updatedAt
+                    ).toLocaleTimeString([], {
+                      hour: "2-digit",
+                      minute: "2-digit",
+                      timeZone: "IST",
+                    })}
                   </span>
                 </div>
               </div>

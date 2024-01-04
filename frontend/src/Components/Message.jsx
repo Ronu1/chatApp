@@ -69,7 +69,7 @@ const Message = ({ message, del }) => {
         message.senderId === currentUser._id && "flex-row-reverse"
       } ${isReplying && "opacity-50"}`}
     >
-      <div className="relative max-w-[80%] flex flex-col">
+      <div className={`relative max-w-[80%] flex flex-col ${message.isLike && "mb-2"}`}>
         {data.isGroupChat && message.senderId !== currentUser._id && (
           <span className="text-[0.7rem] text-start">{message.senderName}</span>
         )}
@@ -78,7 +78,7 @@ const Message = ({ message, del }) => {
           <p
             id={message.id}
             onDoubleClick={() => handleLikeClick(true)}
-            className={`bg-[white] max-w-max px-5 py-2.5 cursor-pointer select-none ${
+            className={`bg-[#ccccff] max-w-max px-5 py-2.5 cursor-pointer select-none ${
               message.senderId === currentUser._id
                 ? "rounded-[10px_0px_10px_10px]"
                 : "rounded-[0px_10px_10px_10px]"
@@ -101,20 +101,18 @@ const Message = ({ message, del }) => {
               />
             )}
 
-            <span className="text-gray-400 text-xs mx-2 ">
+            <span className="text-gray-600 text-xs ml-2 ">
               {message.date.toDate().toLocaleTimeString([], {
                 hour: "2-digit",
                 minute: "2-digit",
               })}
             </span>
-            {currentUser._id === message.senderId ? (
+            {currentUser._id === message.senderId && (
               <EllipsisWithDelete
                 isMessageEllipsis={true}
                 onDelete={() => handleDelete(message)}
               />
-            ) : (
-              ""
-            )}
+            ) }
           </p>
           <i
             className="fa-solid fa-reply cursor-pointer"
@@ -123,7 +121,7 @@ const Message = ({ message, del }) => {
         </span>
         {message.isLike && (
           <i
-            className="fa-solid fa-heart absolute top-[90%] left-3"
+            className="fa-solid fa-heart z-10 absolute top-[90%] left-3"
             style={{ color: "red" }}
             onClick={() => handleLikeClick(false)}
           ></i>
